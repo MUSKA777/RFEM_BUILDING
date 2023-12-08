@@ -1,20 +1,6 @@
-
-
-class MyNode:
-    def __init__(self,
-                 coordinate_X: float = 0.0,
-                 coordinate_Y: float = 0.0,
-                 coordinate_Z: float = 0.0,
-                 no: int = 1,
-                 ):
-
-        self.coordinate_X = coordinate_X
-        self.coordinate_Y = coordinate_Y
-        self.coordinate_Z = coordinate_Z
-
-
-
-
-
-my_node_1 = MyNode(0, 5, 5)
-print(my_node_1.coordinate_Y)
+listOfElements = [True, True, True, True, True]
+# Check if all values are True in a List in Python
+if set(listOfElements) == {True}:
+    print('Yes, all values are True in a List in Python')
+else:
+    print('No, all values are not True in a List in Python')
