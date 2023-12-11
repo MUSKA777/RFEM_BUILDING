@@ -5,7 +5,10 @@ from utils.def_data_classes.surface import AllSurfaces
 from utils.def_data_classes.opening import AllOpening
 from utils.def_data_classes.material import AllMaterial
 from utils.def_data_classes.thickness import AllThicknesses
-
+from RFEM.BasicObjects.surface import Surface
+from utils.def_data_classes.line import DefLine, AllLines, get_line_id_using_coordinates
+from utils.def_data_classes.common import get_new_max_id
+from RFEM.enums import SurfaceGeometry, SurfaceLoadDistributionDirection
 
 class FirstFloor:
     def __init__(self, all_nodes: AllNodes,
@@ -53,6 +56,7 @@ class FirstFloor:
                                           all_nodes=self.all_nodes,
                                           offset_x=25)
 
+
     def create_front_site_without_door(self, coordinate_y: int) -> None:
         self.all_surfaces.create_surface_by_nodes(
             corners_of_the_surface=[DefNode(0, coordinate_y, 0),
@@ -72,11 +76,24 @@ class FirstFloor:
             all_nodes=self.all_nodes,
             all_lines=self.all_lines
         )
+        window_glass_01 = self.all_surfaces.create_load_distribution_by_nodes(
+            corners_of_the_surface=[DefNode(0.75, coordinate_y, -1.23),
+                                    DefNode(4.25, coordinate_y, -1.23),
+                                    DefNode(4.25, coordinate_y, -2.75),
+                                    DefNode(0.75, coordinate_y, -2.75)],
+            all_nodes=self.all_nodes,
+            all_lines=self.all_lines
+        )
+
         for _offset_x in [5, 10, 20]:
             self.all_opening.copy_and_offset(def_opening=window_01,
                                              all_lines=self.all_lines,
                                              all_nodes=self.all_nodes,
                                              offset_x=_offset_x)
+            self.all_surfaces.copy_and_offset(def_surface=window_glass_01,
+                                              all_lines=self.all_lines,
+                                              all_nodes=self.all_nodes,
+                                              offset_x=_offset_x)
 
     def create_front_site(self) -> None:
         self.create_front_site_without_door(coordinate_y=11)
@@ -106,3 +123,25 @@ class FirstFloor:
         self.create_sides_without_windows()
         self.create_front_site()
         self.create_back_site()
+
+        # line_01 = get_line_id_using_coordinates(all_lines=self.all_lines,
+        #                                         start_coordinates=DefNode(0.75, 11, -1.23),
+        #                                         end_coordinates=DefNode(4.25, 11, -1.23))
+        # line_02 = get_line_id_using_coordinates(all_lines=self.all_lines,
+        #                                         start_coordinates=DefNode(4.25, 11, -1.23),
+        #                                         end_coordinates=DefNode(4.25, 11, -2.75))
+        # line_03 = get_line_id_using_coordinates(all_lines=self.all_lines,
+        #                                         start_coordinates=DefNode(4.25, 11, -2.75),
+        #                                         end_coordinates=DefNode(0.75, 11, -2.75))
+        # line_04 = get_line_id_using_coordinates(all_lines=self.all_lines,
+        #                                         start_coordinates=DefNode(0.75, 11, -2.75),
+        #                                         end_coordinates=DefNode(0.75, 11, -1.23))
+        # boundary_lines_no = f"{line_01} {line_02} {line_03} {line_04}"
+        # Surface.LoadDistribution(
+        #     no=get_new_max_id(all_ids=self.all_surfaces.all_ids),
+        #     boundary_lines_no=boundary_lines_no,
+        #     load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_BOTH,
+        #     loaded_lines=boundary_lines_no
+        # )
+
+

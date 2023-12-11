@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict
 
-def get_new_max_id(all_ids: List[int], id: int) -> int:
+def get_new_max_id(all_ids: List[int], id: Optional[int] = None) -> int:
     if not all_ids:
         if id:
             return id
