@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-baseName = os.path.basename(__file__)
-dirName = os.path.dirname(__file__)
-print('basename:    ', baseName)
-print('dirname:     ', dirName)
-sys.path.append(dirName + r'/../..')
+#
+# baseName = os.path.basename(__file__)
+# dirName = os.path.dirname(__file__)
+# sys.path.append(dirName + r'/../..')
 from utils.skeleton import get_node_grid
 from utils.def_data_classes.node import AllNodes
 from utils.def_data_classes.line import AllLines
@@ -15,6 +14,7 @@ from utils.def_data_classes.opening import AllOpening
 from utils.def_data_classes.material import AllMaterial
 from utils.def_data_classes.thickness import AllThicknesses
 from utils.def_data_classes.section import AllSections
+from utils.def_data_classes.member import AllMembers
 from RFEM.initModel import Model
 from floor.first_floor import FirstFloor
 from floor.second_floor import SecondFloor
@@ -29,6 +29,7 @@ class MyModel:
     all_materials = AllMaterial()
     all_thicknesses = AllThicknesses()
     all_sections = AllSections()
+    all_members = AllMembers()
 
     def set_all_materials(self):
         for _material in asdict(self.all_materials).keys():
@@ -57,24 +58,28 @@ class MyModel:
         self.set_all_materials()
         self.set_all_thicknesses()
         self.set_all_sections()
+
         first_floor = FirstFloor(all_nodes=self.all_nodes,
                                  all_lines=self.all_lines,
                                  all_surfaces=self.all_surfaces,
                                  all_opening=self.all_openings,
                                  all_material=self.all_materials,
-                                 all_thicknesses=self.all_thicknesses)
+                                 all_thicknesses=self.all_thicknesses,
+                                 all_sections=self.all_sections,
+                                 all_members=self.all_members)
         first_floor()
         second_floor = SecondFloor(all_nodes=self.all_nodes,
-                                    all_lines=self.all_lines,
-                                 all_surfaces=self.all_surfaces,
-                                 all_opening=self.all_openings,
-                                 all_material=self.all_materials,
-                                 all_thicknesses=self.all_thicknesses)
+                                   all_lines=self.all_lines,
+                                   all_surfaces=self.all_surfaces,
+                                   all_opening=self.all_openings,
+                                   all_material=self.all_materials,
+                                   all_thicknesses=self.all_thicknesses,
+                                   all_sections=self.all_sections,
+                                   all_members=self.all_members)
         second_floor()
 
 
 if __name__ == '__main__':
-
     Model(True, "MyModel")
     Model.clientModel.service.begin_modification()
 

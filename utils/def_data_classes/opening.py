@@ -83,9 +83,9 @@ class AllOpening:
         corners_of_the_opening = []
         for _def_line in def_opening.lines_def_surface:
             for _node in _def_line.nodes_def_line:
-                _def_node = DefNode(_node.coordinate_X+offset_x,
-                            _node.coordinate_Y+offset_y,
-                            _node.coordinate_Z+offset_z)
+                _def_node = DefNode(_node.coordinate_x + offset_x,
+                                    _node.coordinate_y + offset_y,
+                                    _node.coordinate_z + offset_z)
                 if _def_node in corners_of_the_opening:
                     continue
                 corners_of_the_opening.append(_def_node)

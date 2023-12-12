@@ -55,13 +55,13 @@ class AllLines:
 
         for node in nodes_coordinates:
             node_id = get_node_id_using_coordinates(all_nodes=all_nodes,
-                                                  coordinate_X=node.coordinate_X,
-                                                  coordinate_Y=node.coordinate_Y,
-                                                  coordinate_Z=node.coordinate_Z)
+                                                    coordinate_x=node.coordinate_x,
+                                                    coordinate_y=node.coordinate_y,
+                                                    coordinate_z=node.coordinate_z)
             if not node_id:
-                new_node = all_nodes.create_node(coordinate_X=node.coordinate_X,
-                                                 coordinate_Y=node.coordinate_Y,
-                                                 coordinate_Z=node.coordinate_Z)
+                new_node = all_nodes.create_node(coordinate_x=node.coordinate_x,
+                                                 coordinate_y=node.coordinate_y,
+                                                 coordinate_z=node.coordinate_z)
                 node_id = new_node.id
             nodes_no.append(node_id)
         new_def_line = DefLine(
@@ -74,13 +74,13 @@ class AllLines:
 
 
 def are_node_coordinates_same(node_1: DefNode, node_2: DefNode) -> bool:
-    if node_1.coordinate_X != node_2.coordinate_X:
+    if node_1.coordinate_x != node_2.coordinate_x:
         return False
 
-    if node_1.coordinate_Y != node_2.coordinate_Y:
+    if node_1.coordinate_y != node_2.coordinate_y:
         return False
 
-    if node_1.coordinate_Z == node_2.coordinate_Z:
+    if node_1.coordinate_z == node_2.coordinate_z:
         return True
     return False
 

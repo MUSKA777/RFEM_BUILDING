@@ -1,19 +1,17 @@
 from typing import List, Optional, Union, Any
 from dataclasses import dataclass, field
-from RFEM.BasicObjects.node import Node
-from RFEM.BasicObjects.material import Material
 from RFEM.BasicObjects.surface import Surface
 from RFEM.BasicObjects.line import Line
 from utils.def_data_classes.line import DefLine, AllLines, get_line_id_using_coordinates
 from utils.def_data_classes.node import DefNode, AllNodes
 from utils.def_data_classes.common import get_new_max_id
-from RFEM.enums import SurfaceGeometry, SurfaceLoadDistributionDirection
+from RFEM.enums import SurfaceLoadDistributionDirection
 
 
-def get_lines_def_surface(boundary_lines_no):
+def get_lines_def_surface(boundary_lines_id: List[int]):
     lines_def_surface = []
     _nodes_no = []
-    for line_id in boundary_lines_no:
+    for line_id in boundary_lines_id:
         _line = Line.GetLine(line_id)
         for _str_value in _line.definition_nodes.split(" "):
             _nodes_no.append(int(_str_value))
@@ -28,13 +26,13 @@ def get_lines_def_surface(boundary_lines_no):
 @dataclass
 class DefSurface:
     id: int
-    boundary_lines_no: List[int]
+    boundary_lines_id: List[int]
     thickness: int
     lines_def_surface: List[DefLine] = field(default_factory=list)
 
     def __post_init__(self):
-        if self.boundary_lines_no:
-            self.lines_def_surface.extend(get_lines_def_surface(boundary_lines_no=self.boundary_lines_no))
+        if self.boundary_lines_id:
+            self.lines_def_surface.extend(get_lines_def_surface(boundary_lines_id=self.boundary_lines_id))
 
 
 @dataclass
@@ -47,7 +45,7 @@ class DefLoadDistribution:
 
     def __post_init__(self):
         if self.boundary_lines_no:
-            self.lines_def_surface.extend(get_lines_def_surface(boundary_lines_no=self.boundary_lines_no))
+            self.lines_def_surface.extend(get_lines_def_surface(boundary_lines_id=self.boundary_lines_no))
 
 
 def get_boundary_lines_no(corners_of_the_surface, all_lines, all_nodes) -> List[int]:
@@ -84,7 +82,7 @@ class AllSurfaces:
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
         new_def_surface = DefSurface(
-            boundary_lines_no=boundary_lines_no,
+            boundary_lines_id=boundary_lines_no,
             thickness=thickness,
             id=new_id)
         Surface(boundary_lines_no=str(boundary_lines_no)[1:-1],
@@ -108,7 +106,7 @@ class AllSurfaces:
         )
 
         new_def_surface = DefSurface(
-            boundary_lines_no=boundary_lines_no,
+            boundary_lines_id=boundary_lines_no,
             thickness=thickness,
             id=new_id)
         Surface(boundary_lines_no=str(boundary_lines_no)[1:-1],
@@ -121,7 +119,7 @@ class AllSurfaces:
                                           corners_of_the_surface: List[DefNode],
                                           all_lines: AllLines,
                                           id: Optional[int] = None,
-                                          all_nodes: Optional[AllNodes] = None):
+                                          all_nodes: Optional[AllNodes] = None) -> DefLoadDistribution:
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
         boundary_lines_no = get_boundary_lines_no(
@@ -147,16 +145,16 @@ class AllSurfaces:
                         offset_x: float = 0.0,  # m
                         offset_y: float = 0.0,  # m
                         offset_z: float = 0.0,  # m
-                        id: Optional[int] = None, ):
+                        id: Optional[int] = None, ) -> Union[DefSurface, DefLoadDistribution]:
 
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
         corners_of_the_surface = []
         for _def_line in def_surface.lines_def_surface:
             for _node in _def_line.nodes_def_line:
-                _def_node = DefNode(_node.coordinate_X + offset_x,
-                                    _node.coordinate_Y + offset_y,
-                                    _node.coordinate_Z + offset_z)
+                _def_node = DefNode(_node.coordinate_x + offset_x,
+                                    _node.coordinate_y + offset_y,
+                                    _node.coordinate_z + offset_z)
                 if _def_node in corners_of_the_surface:
                     continue
                 corners_of_the_surface.append(_def_node)

@@ -1,12 +1,29 @@
 from dataclasses import dataclass
 
+
 @dataclass
-class Book:
-    '''Object for tracking physical books in a collection.'''
-    name: str
-    weight: float 
-    shelf_id: int = 0
+class VS:
+    v: float  # value
+    s: float  # scale factor
+
+    def scaled_value(self):
+        return self.v * self.s
 
 
-my_book = Book(name="annno", weight=10, shelf_id=5)
-print(type(my_book.__class__.__name__))
+@dataclass
+class Container:
+    a: VS = VS(1, 1)
+    b: float = 1
+
+
+c1 = Container()
+c2 = Container()
+
+print(c1)
+print(c2)
+
+c1.a.v = -999
+c1.b = -999
+
+print(c1)
+print(c2)

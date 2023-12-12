@@ -8,3 +8,5 @@ def get_new_max_id(all_ids: List[int], id: Optional[int] = None) -> int:
     if id and id not in all_ids:
         return id
     return max(all_ids) + 1
+
+

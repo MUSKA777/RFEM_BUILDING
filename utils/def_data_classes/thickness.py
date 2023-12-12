@@ -3,6 +3,7 @@ from utils.def_data_classes.material import AllMaterial
 from typing import Optional
 from RFEM.BasicObjects.thickness import Thickness
 
+
 @dataclass
 class ThicknessType:
     uniform: str = "Uniform"
@@ -48,6 +49,3 @@ class AllThicknesses:
         material=AllMaterial.c20_slash_25_isotropic_linear_elastic,
         uniform_thickness_d=0.240
     )
-
-
-
