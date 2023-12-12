@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from RFEM.enums import SurfaceGeometry
-from RFEM.BasicObjects.surface import Surface
 import sys
 baseName = os.path.basename(__file__)
 dirName = os.path.dirname(__file__)
@@ -10,25 +8,19 @@ print('basename:    ', baseName)
 print('dirname:     ', dirName)
 sys.path.append(dirName + r'/../..')
 from utils.skeleton import get_node_grid
-from utils.def_data_classes.node import AllNodes, DefNode
+from utils.def_data_classes.node import AllNodes
 from utils.def_data_classes.line import AllLines
 from utils.def_data_classes.surface import AllSurfaces
 from utils.def_data_classes.opening import AllOpening
 from utils.def_data_classes.material import AllMaterial
 from utils.def_data_classes.thickness import AllThicknesses
 from utils.def_data_classes.section import AllSections
-from RFEM.enums import NodalSupportType, MemberRotationSpecificationType
-from RFEM.initModel import Model, clearAttributes, insertSpaces
-from first_floor import FirstFloor
+from RFEM.initModel import Model
+from floor.first_floor import FirstFloor
+from floor.second_floor import SecondFloor
 from dataclasses import asdict
-from dataclasses import asdict
-from RFEM.BasicObjects.material import Material
-from RFEM.BasicObjects.section import Section
-from RFEM.BasicObjects.node import Node
-from RFEM.BasicObjects.member import Member
-from RFEM.BasicObjects.line import Line
-from RFEM.BasicObjects.opening import Opening
-from RFEM.TypesForNodes.nodalSupport import NodalSupport
+
+
 class MyModel:
     all_nodes = AllNodes()
     all_lines = AllLines()
@@ -72,6 +64,13 @@ class MyModel:
                                  all_material=self.all_materials,
                                  all_thicknesses=self.all_thicknesses)
         first_floor()
+        second_floor = SecondFloor(all_nodes=self.all_nodes,
+                                    all_lines=self.all_lines,
+                                 all_surfaces=self.all_surfaces,
+                                 all_opening=self.all_openings,
+                                 all_material=self.all_materials,
+                                 all_thicknesses=self.all_thicknesses)
+        second_floor()
 
 
 if __name__ == '__main__':
