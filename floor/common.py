@@ -8,24 +8,17 @@ from utils.def_data_classes.section import AllSections
 from utils.def_data_classes.member import AllMembers
 from typing import List, Tuple
 
-
+from utils.def_data_classes.base import AllBasicObjects
 class CommonForFloor:
-    def __init__(self, all_nodes: AllNodes,
-                 all_lines: AllLines,
-                 all_surfaces: AllSurfaces,
-                 all_opening: AllOpening,
-                 all_material: AllMaterial,
-                 all_thicknesses: AllThicknesses,
-                 all_sections: AllSections,
-                 all_members: AllMembers):
-        self.all_nodes = all_nodes
-        self.all_lines = all_lines
-        self.all_surfaces = all_surfaces
-        self.all_opening = all_opening
-        self.all_material = all_material
-        self.all_thicknesses = all_thicknesses
-        self.all_sections = all_sections
-        self.all_members = all_members
+    def __init__(self, all_basic_objects: AllBasicObjects):
+        self.all_nodes = all_basic_objects.all_nodes
+        self.all_lines = all_basic_objects.all_lines
+        self.all_surfaces = all_basic_objects.all_surfaces
+        self.all_opening = all_basic_objects.all_openings
+        self.all_material = all_basic_objects.all_materials
+        self.all_thicknesses = all_basic_objects.all_thicknesses
+        self.all_sections = all_basic_objects.all_sections
+        self.all_members = all_basic_objects.all_members
 
     @staticmethod
     def get_corners_of_the_surface_with_offset(corners_of_the_surface: List[DefNode],
