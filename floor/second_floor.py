@@ -2,6 +2,7 @@ from floor.common import CommonForFloor
 from utils.def_data_classes.section import AllSections
 from RFEM.BasicObjects.member import Member
 from utils.def_data_classes.node import DefNode
+from RFEM.enums import SurfaceLoadDistributionDirection
 
 
 class SecondFloor(CommonForFloor):
@@ -121,6 +122,17 @@ class SecondFloor(CommonForFloor):
             all_nodes=self.all_nodes
         )
 
+    def create_roof(self):
+        self.all_surfaces.create_load_distribution_by_nodes(
+            corners_of_the_surface=[DefNode(0, 0, -6.68),
+                                    DefNode(25, 0, -6.68),
+                                    DefNode(25, 11, -6.68),
+                                    DefNode(0, 11, -6.68)],
+            all_lines=self.all_lines,
+            all_nodes=self.all_nodes,
+            load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_X
+        )
+
     def __call__(self):
         self.create_back_site_with_offset(offset_z=-3.34)
         self.create_back_site_with_offset(offset_z=-3.34, offset_y=11)
@@ -131,4 +143,12 @@ class SecondFloor(CommonForFloor):
         self.create_bearing_pillars_with_offset(offset_x=5)
         self.create_basic_pillars()
         self.create_bearing_pillars_first_floor()
-        self.create_base_with_offset(offset_z=2*-3.34)
+        self.all_surfaces.create_load_distribution_by_nodes(
+            corners_of_the_surface=[DefNode(0, 0, -6.68),
+                                  DefNode(25, 0, -6.68),
+                                  DefNode(25, 11, -6.68),
+                                  DefNode(0, 11,-6.68)],
+            all_lines=self.all_lines,
+            all_nodes=self.all_nodes,
+            load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_X
+        )

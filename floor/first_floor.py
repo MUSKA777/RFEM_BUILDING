@@ -1,11 +1,20 @@
-from utils.def_data_classes.node import DefNode
 from floor.common import CommonForFloor
 from utils.def_data_classes.section import AllSections
-from RFEM.BasicObjects.member import Member
-from utils.def_data_classes.node import DefNode, get_node_id_using_coordinates
+from utils.def_data_classes.node import DefNode
 
 
 class FirstFloor(CommonForFloor):
+    def create_foundations(self) -> None:
+        self.all_surfaces.create_surface_by_nodes(
+            corners_of_the_surface=[DefNode(0, 0, 0),
+                                    DefNode(25, 0, 0),
+                                    DefNode(25, 11, 0),
+                                    DefNode(0, 11, 0)],
+            all_lines=self.all_lines,
+            all_nodes=self.all_nodes,
+            thickness=self.all_thicknesses.uniform_d_300_c20slash25.id,
+        )
+
     #
     def create_bearing_pillars(self):
         self.all_lines.create_line_by_coordinates(
@@ -67,7 +76,7 @@ class FirstFloor(CommonForFloor):
         )
 
     def __call__(self) -> None:
-        self.create_base_with_offset()
+        self.create_foundations()
         self.create_first_left_side_with_offset()
         self.create_front_site()
         self.create_area_for_stairs_with_offset()

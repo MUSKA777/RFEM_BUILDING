@@ -2,15 +2,19 @@ from dataclasses import dataclass, field
 from typing import Optional
 from utils.def_data_classes.material import AllMaterial
 from RFEM.BasicObjects.section import Section
+
+
 @dataclass
 class SectionType:
     parametric_massive_I: str = "Parametric - Massive I"
     standardized_steel: str = "Standardized - Steel"
 
+
 @dataclass
 class ManufacturingType:
     hot_rolled: str = "Hot rolled"
     cold_formed: str = "Cold formed"
+
 
 @dataclass
 class DefSection:
@@ -20,6 +24,7 @@ class DefSection:
     section_name: str
     manufacturing_type: Optional[str] = field(default=None)
     name: Optional[str] = field(default=None)
+
     def __post_init__(self):
         self.name = f"{self.id} - {self.section_name} | {self.material.name}"
 
@@ -69,12 +74,3 @@ class AllSections:
         manufacturing_type=ManufacturingType.hot_rolled,
         section_name="HE 100 A"
     )
-
-
-
-
-
-
-
-
-

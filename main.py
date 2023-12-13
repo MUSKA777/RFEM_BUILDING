@@ -7,15 +7,7 @@ import sys
 # dirName = os.path.dirname(__file__)
 # sys.path.append(dirName + r'/../..')
 from utils.skeleton import get_node_grid
-from utils.def_data_classes.node import AllNodes
-from utils.def_data_classes.line import AllLines
-from utils.def_data_classes.surface import AllSurfaces
-from utils.def_data_classes.opening import AllOpening
-from utils.def_data_classes.material import AllMaterial
-from utils.def_data_classes.thickness import AllThicknesses
-from utils.def_data_classes.section import AllSections
-from utils.def_data_classes.member import AllMembers
-from RFEM.initModel import Model
+from RFEM.initModel import Model, clearAttributes
 from floor.first_floor import FirstFloor
 from floor.second_floor import SecondFloor
 from dataclasses import asdict
@@ -24,14 +16,6 @@ from utils.def_data_classes.base import AllBasicObjects
 
 
 class MyModel:
-    # all_nodes = AllNodes()
-    # all_lines = AllLines()
-    # all_surfaces = AllSurfaces()
-    # all_openings = AllOpening()
-    # all_materials = AllMaterial()
-    # all_thicknesses = AllThicknesses()
-    # all_sections = AllSections()
-    # all_members = AllMembers()
     all_basic_objects = AllBasicObjects()
 
     def set_all_materials(self):
@@ -69,7 +53,7 @@ class MyModel:
 
 
 if __name__ == '__main__':
-    Model(True, "MyModel")
+    Model(True, "MyModel", delete_all=True)
     Model.clientModel.service.begin_modification()
 
     my_model = MyModel()

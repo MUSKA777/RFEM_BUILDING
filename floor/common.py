@@ -1,14 +1,10 @@
-from utils.def_data_classes.node import AllNodes, DefNode
-from utils.def_data_classes.surface import AllSurfaces, DefLoadDistribution
-from utils.def_data_classes.opening import AllOpening, DefOpening
-from utils.def_data_classes.material import AllMaterial
-from utils.def_data_classes.thickness import AllThicknesses
-from utils.def_data_classes.line import AllLines
-from utils.def_data_classes.section import AllSections
-from utils.def_data_classes.member import AllMembers
+from utils.def_data_classes.node import DefNode
+from utils.def_data_classes.surface import DefLoadDistribution
+from utils.def_data_classes.opening import DefOpening
 from typing import List, Tuple
-
 from utils.def_data_classes.base import AllBasicObjects
+
+
 class CommonForFloor:
     def __init__(self, all_basic_objects: AllBasicObjects):
         self.all_nodes = all_basic_objects.all_nodes
@@ -39,27 +35,6 @@ class CommonForFloor:
         corners_of_the_surface = [DefNode(0, 0, 0),
                                   DefNode(0, 0, -3.34),
                                   DefNode(0, 11, -3.34),
-                                  DefNode(0, 11, 0)]
-        new_corners_of_the_surface = self.get_corners_of_the_surface_with_offset(
-            corners_of_the_surface=corners_of_the_surface,
-            offset_x=offset_x,
-            offset_y=offset_y,
-            offset_z=offset_z
-        )
-        self.all_surfaces.create_surface_by_nodes(
-            corners_of_the_surface=new_corners_of_the_surface,
-            all_lines=self.all_lines,
-            all_nodes=self.all_nodes,
-            thickness=self.all_thicknesses.uniform_d_300_c20slash25.id,
-        )
-
-    def create_base_with_offset(self,
-                                offset_x: float = 0.0,  # m
-                                offset_y: float = 0.0,  # m
-                                offset_z: float = 0.0) -> None:
-        corners_of_the_surface = [DefNode(0, 0, 0),
-                                  DefNode(25, 0, 0),
-                                  DefNode(25, 11, 0),
                                   DefNode(0, 11, 0)]
         new_corners_of_the_surface = self.get_corners_of_the_surface_with_offset(
             corners_of_the_surface=corners_of_the_surface,

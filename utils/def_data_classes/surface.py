@@ -119,6 +119,7 @@ class AllSurfaces:
                                           corners_of_the_surface: List[DefNode],
                                           all_lines: AllLines,
                                           id: Optional[int] = None,
+                                          load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_BOTH,
                                           all_nodes: Optional[AllNodes] = None) -> DefLoadDistribution:
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
@@ -129,12 +130,12 @@ class AllSurfaces:
         )
         new_load_distribution = DefLoadDistribution(id=new_id,
                                                     boundary_lines_no=boundary_lines_no,
-                                                    load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_BOTH,
+                                                    load_transfer_direction=load_transfer_direction,
                                                     loaded_lines=boundary_lines_no)
         Surface.LoadDistribution(
             no=new_id,
             boundary_lines_no=str(boundary_lines_no)[1:-1],
-            load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_BOTH,
+            load_transfer_direction=load_transfer_direction,
             loaded_lines=str(boundary_lines_no)[1:-1]
         )
         return new_load_distribution
