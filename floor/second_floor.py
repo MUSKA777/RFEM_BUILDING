@@ -143,5 +143,7 @@ class SecondFloor(CommonForFloor):
         self.create_bearing_pillars_with_offset()
         self.create_bearing_pillars_with_offset(offset_x=5)
         self.create_basic_pillars()
+        # ##########################################
         self.create_bearing_pillars_first_floor()
+        # ##########################################
         self.create_roof()
