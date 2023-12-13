@@ -6,7 +6,7 @@ from RFEM.enums import SurfaceLoadDistributionDirection
 
 
 class SecondFloor(CommonForFloor):
-    def create_bearing_pillars_first_floor(self):
+    def create_bearing_pillars_first_floor(self) -> None:
         self.all_members.create_member_by_coordinates(
             nodes_coordinates=[DefNode(5, 6.5, 0), DefNode(5, 6.5, -3.34)],
             list_sections=[AllSections.r_m1_240_slash_240_c20_slash_25, AllSections.r_m1_240_slash_240_c20_slash_25],
@@ -109,7 +109,7 @@ class SecondFloor(CommonForFloor):
             all_nodes=self.all_nodes
         )
 
-    def create_basic_pillars(self):
+    def create_basic_pillars(self) -> None:
         self.all_members.create_member_by_coordinates(
             nodes_coordinates=[DefNode(15, 0, -6.68), DefNode(15, 6.5, -6.68)],
             list_sections=[AllSections.ipe_200_slash_1_grade_s355, AllSections.ipe_200_slash_1_grade_s355],
@@ -122,7 +122,7 @@ class SecondFloor(CommonForFloor):
             all_nodes=self.all_nodes
         )
 
-    def create_roof(self):
+    def create_roof(self) -> None:
         self.all_surfaces.create_load_distribution_by_nodes(
             corners_of_the_surface=[DefNode(0, 0, -6.68),
                                     DefNode(25, 0, -6.68),
@@ -143,12 +143,4 @@ class SecondFloor(CommonForFloor):
         self.create_bearing_pillars_with_offset(offset_x=5)
         self.create_basic_pillars()
         self.create_bearing_pillars_first_floor()
-        self.all_surfaces.create_load_distribution_by_nodes(
-            corners_of_the_surface=[DefNode(0, 0, -6.68),
-                                  DefNode(25, 0, -6.68),
-                                  DefNode(25, 11, -6.68),
-                                  DefNode(0, 11,-6.68)],
-            all_lines=self.all_lines,
-            all_nodes=self.all_nodes,
-            load_transfer_direction=SurfaceLoadDistributionDirection.LOAD_TRANSFER_DIRECTION_IN_X
-        )
+        self.create_roof()

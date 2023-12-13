@@ -16,7 +16,7 @@ class FirstFloor(CommonForFloor):
         )
 
     #
-    def create_bearing_pillars(self):
+    def create_bearing_pillars(self) -> None:
         self.all_lines.create_line_by_coordinates(
             nodes_coordinates=[DefNode(5, 6.5, 0), DefNode(5, 6.5, -3.34)],
             all_nodes=self.all_nodes)
@@ -59,7 +59,7 @@ class FirstFloor(CommonForFloor):
                                              DefNode(15.75, 11, -2.75)]
         self.create_window_with_glass(corners_of_the_opening=front_door_corners_of_the_opening)
 
-    def create_mezzanine_base(self):
+    def create_mezzanine_base(self) -> None:
         self.all_surfaces.create_surface_by_nodes(
             corners_of_the_surface=[DefNode(0, 0, -3.34),
                                     DefNode(25, 0, -3.34),
