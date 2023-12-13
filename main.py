@@ -1,18 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import os
-import sys
-#
-# baseName = os.path.basename(__file__)
-# dirName = os.path.dirname(__file__)
-# sys.path.append(dirName + r'/../..')
 from utils.skeleton import get_node_grid
-from RFEM.initModel import Model, clearAttributes
+from RFEM.initModel import Model
 from floor.first_floor import FirstFloor
 from floor.second_floor import SecondFloor
 from dataclasses import asdict
 from utils.def_data_classes.base import AllBasicObjects
-
 
 
 class MyModel:

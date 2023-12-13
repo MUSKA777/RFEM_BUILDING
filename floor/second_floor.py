@@ -1,6 +1,5 @@
 from floor.common import CommonForFloor
 from utils.def_data_classes.section import AllSections
-from RFEM.BasicObjects.member import Member
 from utils.def_data_classes.node import DefNode
 from RFEM.enums import SurfaceLoadDistributionDirection
 
@@ -25,8 +24,8 @@ class SecondFloor(CommonForFloor):
 
     def create_bearing_pillars_with_offset(self,
                                            offset_x: float = 0.0,  # m
-                                          offset_y: float = 0.0,  # m
-                                          offset_z: float = 0.0,  # m
+                                           offset_y: float = 0.0,  # m
+                                           offset_z: float = 0.0,  # m
                                            ) -> None:
         # upper
         upper_line_nodes_coordinates = self.get_corners_of_the_surface_with_offset(
@@ -86,7 +85,7 @@ class SecondFloor(CommonForFloor):
             list_sections=[AllSections.he_100_A_slash_1_grade_s355, AllSections.he_100_A_slash_1_grade_s355],
             all_nodes=self.all_nodes
         )
-
+        # pillar_01
         pillar_01_nodes_coordinates = self.get_corners_of_the_surface_with_offset(
             [DefNode(5, 3.25, -5.93), DefNode(5, 3.25, -6.68)], offset_x, offset_y, offset_z)
         self.all_members.create_member_by_coordinates(
@@ -94,6 +93,7 @@ class SecondFloor(CommonForFloor):
             list_sections=[AllSections.chc_60dot3x3_slash_1_grade_s355, AllSections.chc_60dot3x3_slash_1_grade_s355],
             all_nodes=self.all_nodes
         )
+        # pillar_02
         pillar_02_nodes_coordinates = self.get_corners_of_the_surface_with_offset(
             [DefNode(5, 6.5, -5.93), DefNode(5, 6.5, -6.68)], offset_x, offset_y, offset_z)
         self.all_members.create_member_by_coordinates(
@@ -101,6 +101,7 @@ class SecondFloor(CommonForFloor):
             list_sections=[AllSections.chc_60dot3x3_slash_1_grade_s355, AllSections.chc_60dot3x3_slash_1_grade_s355],
             all_nodes=self.all_nodes
         )
+        # pillar_03
         pillar_03_nodes_coordinates = self.get_corners_of_the_surface_with_offset(
             [DefNode(5, 8.75, -5.93), DefNode(5, 8.75, -6.68)], offset_x, offset_y, offset_z)
         self.all_members.create_member_by_coordinates(
