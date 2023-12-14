@@ -55,3 +55,4 @@ if __name__ == "__main__":
     my_model()
 
     Model.clientModel.service.finish_modification()
+    print("DONE!!")
