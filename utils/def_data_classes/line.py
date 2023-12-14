@@ -1,9 +1,11 @@
 from dataclasses import dataclass, field
-from typing import List, Optional, Dict
-from RFEM.BasicObjects.node import Node
+from typing import List, Optional
+
 from RFEM.BasicObjects.line import Line
+from RFEM.BasicObjects.node import Node
+
 from utils.def_data_classes.common import get_new_max_id
-from utils.def_data_classes.node import DefNode, AllNodes, get_node_id_using_coordinates
+from utils.def_data_classes.node import AllNodes, DefNode, get_node_id_using_coordinates
 
 
 @dataclass
@@ -21,7 +23,9 @@ class DefLine:
             pair_def_node = []
             for node_id in self.nodes_no:
                 _node = Node.GetNode(node_id)
-                pair_def_node.append(DefNode(_node.coordinate_1, _node.coordinate_2, _node.coordinate_3))
+                pair_def_node.append(
+                    DefNode(_node.coordinate_1, _node.coordinate_2, _node.coordinate_3)
+                )
             self.nodes_def_line.extend(pair_def_node)
 
 
@@ -30,45 +34,46 @@ class AllLines:
     all_ids: List[int] = field(default_factory=list)
     all_def_lines: List[DefLine] = field(default_factory=list)
 
-    def create_line_by_no(self,
-                          nodes_no: List[int],
-                          id: Optional[int] = None,
-                          ):
+    def create_line_by_no(
+        self,
+        nodes_no: List[int],
+        id: Optional[int] = None,
+    ):
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
-        new_def_line = DefLine(
-            nodes_no=nodes_no,
-            id=new_id)
-        Line(nodes_no=f"{nodes_no}",
-             no=new_id)
+        new_def_line = DefLine(nodes_no=nodes_no, id=new_id)
+        Line(nodes_no=f"{nodes_no}", no=new_id)
 
         self.all_def_lines.append(new_def_line)
         return new_def_line
 
-    def create_line_by_coordinates(self,
-                                   nodes_coordinates: List[DefNode],
-                                   all_nodes: AllNodes,
-                                   id: Optional[int] = None):
+    def create_line_by_coordinates(
+        self,
+        nodes_coordinates: List[DefNode],
+        all_nodes: AllNodes,
+        id: Optional[int] = None,
+    ):
         new_id = get_new_max_id(all_ids=self.all_ids, id=id)
         self.all_ids.append(new_id)
         nodes_no: List[int] = []
 
         for node in nodes_coordinates:
-            node_id = get_node_id_using_coordinates(all_nodes=all_nodes,
-                                                    coordinate_x=node.coordinate_x,
-                                                    coordinate_y=node.coordinate_y,
-                                                    coordinate_z=node.coordinate_z)
+            node_id = get_node_id_using_coordinates(
+                all_nodes=all_nodes,
+                coordinate_x=node.coordinate_x,
+                coordinate_y=node.coordinate_y,
+                coordinate_z=node.coordinate_z,
+            )
             if not node_id:
-                new_node = all_nodes.create_node(coordinate_x=node.coordinate_x,
-                                                 coordinate_y=node.coordinate_y,
-                                                 coordinate_z=node.coordinate_z)
+                new_node = all_nodes.create_node(
+                    coordinate_x=node.coordinate_x,
+                    coordinate_y=node.coordinate_y,
+                    coordinate_z=node.coordinate_z,
+                )
                 node_id = new_node.id
             nodes_no.append(node_id)
-        new_def_line = DefLine(
-            nodes_no=nodes_no,
-            id=new_id)
-        Line(nodes_no=str(nodes_no)[1:-1],
-             no=new_id)
+        new_def_line = DefLine(nodes_no=nodes_no, id=new_id)
+        Line(nodes_no=str(nodes_no)[1:-1], no=new_id)
         self.all_def_lines.append(new_def_line)
         return new_def_line
 
@@ -85,7 +90,9 @@ def are_node_coordinates_same(node_1: DefNode, node_2: DefNode) -> bool:
     return False
 
 
-def get_line_id_using_coordinates(all_lines: AllLines, start_coordinates: DefNode, end_coordinates: DefNode):
+def get_line_id_using_coordinates(
+    all_lines: AllLines, start_coordinates: DefNode, end_coordinates: DefNode
+):
     for _def_line in all_lines.all_def_lines:
         are_checkpoints_met = [False, False]
         for _def_node in _def_line.nodes_def_line:

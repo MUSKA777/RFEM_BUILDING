@@ -1,9 +1,11 @@
-from utils.skeleton import get_node_grid
+from dataclasses import asdict
+
 from RFEM.initModel import Model
+
 from floor.first_floor import FirstFloor
 from floor.second_floor import SecondFloor
-from dataclasses import asdict
 from utils.def_data_classes.base import AllBasicObjects
+from utils.skeleton import get_node_grid
 
 
 class MyModel:
@@ -29,10 +31,12 @@ class MyModel:
 
     def __call__(self, *args, **kwargs):
 
-        get_node_grid(list_coordinates_x=[0, 5, 10, 15, 20, 25],
-                      list_coordinates_y=[0, 4, 6.5, 11],
-                      list_coordinates_z=[0, -3.34, -6.68],
-                      all_nodes=self.all_basic_objects.all_nodes)
+        get_node_grid(
+            list_coordinates_x=[0, 5, 10, 15, 20, 25],
+            list_coordinates_y=[0, 4, 6.5, 11],
+            list_coordinates_z=[0, -3.34, -6.68],
+            all_nodes=self.all_basic_objects.all_nodes,
+        )
         self.set_all_materials()
         self.set_all_thicknesses()
         self.set_all_sections()
@@ -43,7 +47,7 @@ class MyModel:
         second_floor()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     Model(True, "MyModel", delete_all=True)
     Model.clientModel.service.begin_modification()
 

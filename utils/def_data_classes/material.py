@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Optional
+
 from RFEM.BasicObjects.material import Material
 
 
@@ -80,16 +81,19 @@ class AllMaterial:
         id=1,
         material_name=MaterialName.grade_s355,
         material_type=MaterialType.concrete,
-        material_model=MaterialModel.isotropic_linear_elastic)
+        material_model=MaterialModel.isotropic_linear_elastic,
+    )
 
     c20_slash_25_isotropic_linear_elastic: DefMaterial = DefMaterial(
         id=2,
         material_name=MaterialName.c20_slash_25,
         material_type=MaterialType.concrete,
-        material_model=MaterialModel.isotropic_linear_elastic)
+        material_model=MaterialModel.isotropic_linear_elastic,
+    )
 
     b500s_a_isotropic_linear_elastic: DefMaterial = DefMaterial(
         id=3,
         material_name=MaterialName.b500s_a,
         material_type=MaterialType.reinforcing_steel,
-        material_model=MaterialModel.isotropic_linear_elastic)
+        material_model=MaterialModel.isotropic_linear_elastic,
+    )

@@ -1,15 +1,17 @@
 from floor.common import CommonForFloor
-from utils.def_data_classes.section import AllSections
 from utils.def_data_classes.node import DefNode
+from utils.def_data_classes.section import AllSections
 
 
 class FirstFloor(CommonForFloor):
     def create_foundations(self) -> None:
         self.all_surfaces.create_surface_by_nodes(
-            corners_of_the_surface=[DefNode(0, 0, 0),
-                                    DefNode(25, 0, 0),
-                                    DefNode(25, 11, 0),
-                                    DefNode(0, 11, 0)],
+            corners_of_the_surface=[
+                DefNode(0, 0, 0),
+                DefNode(25, 0, 0),
+                DefNode(25, 11, 0),
+                DefNode(0, 11, 0),
+            ],
             all_lines=self.all_lines,
             all_nodes=self.all_nodes,
             thickness=self.all_thicknesses.uniform_d_300_c20slash25.id,
@@ -53,40 +55,55 @@ class FirstFloor(CommonForFloor):
     def create_bearing_pillars_first_floor(self) -> None:
         self.all_members.create_member_by_coordinates(
             nodes_coordinates=[DefNode(5, 6.5, 0), DefNode(5, 6.5, -3.34)],
-            list_sections=[AllSections.r_m1_240_slash_240_c20_slash_25, AllSections.r_m1_240_slash_240_c20_slash_25],
-            all_nodes=self.all_nodes
+            list_sections=[
+                AllSections.r_m1_240_slash_240_c20_slash_25,
+                AllSections.r_m1_240_slash_240_c20_slash_25,
+            ],
+            all_nodes=self.all_nodes,
         )
 
         self.all_members.create_member_by_coordinates(
             nodes_coordinates=[DefNode(10, 6.5, 0), DefNode(10, 6.5, -3.34)],
-            list_sections=[AllSections.r_m1_240_slash_240_c20_slash_25, AllSections.r_m1_240_slash_240_c20_slash_25],
-            all_nodes=self.all_nodes
+            list_sections=[
+                AllSections.r_m1_240_slash_240_c20_slash_25,
+                AllSections.r_m1_240_slash_240_c20_slash_25,
+            ],
+            all_nodes=self.all_nodes,
         )
         self.all_members.create_member_by_coordinates(
             nodes_coordinates=[DefNode(0, 6.5, -3.34), DefNode(15, 6.5, -3.34)],
-            list_sections=[AllSections.r_m1_240_slash_500_c20_slash_25, AllSections.r_m1_240_slash_500_c20_slash_25],
-            all_nodes=self.all_nodes)
+            list_sections=[
+                AllSections.r_m1_240_slash_500_c20_slash_25,
+                AllSections.r_m1_240_slash_500_c20_slash_25,
+            ],
+            all_nodes=self.all_nodes,
+        )
 
     def create_front_site(self) -> None:
         self.create_back_site_without_door_with_offset(offset_y=11)
 
-        front_door_corners_of_the_opening = [DefNode(15.75, 11, -0.15),
-                                             DefNode(19.25, 11, -0.15),
-                                             DefNode(19.25, 11, -2.75),
-                                             DefNode(15.75, 11, -2.75)]
-        self.create_window_with_glass(corners_of_the_opening=front_door_corners_of_the_opening)
+        front_door_corners_of_the_opening = [
+            DefNode(15.75, 11, -0.15),
+            DefNode(19.25, 11, -0.15),
+            DefNode(19.25, 11, -2.75),
+            DefNode(15.75, 11, -2.75),
+        ]
+        self.create_window_with_glass(
+            corners_of_the_opening=front_door_corners_of_the_opening
+        )
 
     def create_mezzanine_base(self) -> None:
         self.all_surfaces.create_surface_by_nodes(
-            corners_of_the_surface=[DefNode(0, 0, -3.34),
-                                    DefNode(25, 0, -3.34),
-                                    DefNode(25, 11, -3.34),
-                                    DefNode(20, 11, -3.34),
-                                    DefNode(20, 6.5, -3.34),
-                                    DefNode(15, 6.5, -3.34),
-                                    DefNode(15, 11, -3.34),
-                                    DefNode(0, 11, -3.34),
-                                    ],
+            corners_of_the_surface=[
+                DefNode(0, 0, -3.34),
+                DefNode(25, 0, -3.34),
+                DefNode(25, 11, -3.34),
+                DefNode(20, 11, -3.34),
+                DefNode(20, 6.5, -3.34),
+                DefNode(15, 6.5, -3.34),
+                DefNode(15, 11, -3.34),
+                DefNode(0, 11, -3.34),
+            ],
             all_lines=self.all_lines,
             all_nodes=self.all_nodes,
             thickness=self.all_thicknesses.uniform_d_300_c20slash25.id,

@@ -1,14 +1,15 @@
 from dataclasses import dataclass
-from utils.skeleton import get_node_grid
-from utils.def_data_classes.node import AllNodes
+from typing import Any
+
 from utils.def_data_classes.line import AllLines
-from utils.def_data_classes.surface import AllSurfaces
-from utils.def_data_classes.opening import AllOpening
 from utils.def_data_classes.material import AllMaterial
-from utils.def_data_classes.thickness import AllThicknesses
-from utils.def_data_classes.section import AllSections
 from utils.def_data_classes.member import AllMembers
-from typing import Type, Any
+from utils.def_data_classes.node import AllNodes
+from utils.def_data_classes.opening import AllOpening
+from utils.def_data_classes.section import AllSections
+from utils.def_data_classes.surface import AllSurfaces
+from utils.def_data_classes.thickness import AllThicknesses
+
 
 @dataclass
 class AllBasicObjects:

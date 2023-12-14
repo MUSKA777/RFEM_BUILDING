@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
-from utils.def_data_classes.material import AllMaterial
 from typing import Optional
+
 from RFEM.BasicObjects.thickness import Thickness
+
+from utils.def_data_classes.material import AllMaterial
 
 
 @dataclass
@@ -22,10 +24,12 @@ class DefThickness:
         self.name = f"{self.id} - {self.thickness_type} | d : {self.uniform_thickness_d} | {self.material.name}"
 
     def create_thickness(self):
-        Thickness(no=self.id,
-                  # name=self.thickness_type,
-                  material_no=self.material.id,
-                  uniform_thickness_d=self.uniform_thickness_d)
+        Thickness(
+            no=self.id,
+            # name=self.thickness_type,
+            material_no=self.material.id,
+            uniform_thickness_d=self.uniform_thickness_d,
+        )
 
 
 @dataclass
@@ -34,18 +38,18 @@ class AllThicknesses:
         id=1,
         thickness_type=ThicknessType.uniform,
         material=AllMaterial.c20_slash_25_isotropic_linear_elastic,
-        uniform_thickness_d=0.300
+        uniform_thickness_d=0.300,
     )
 
     uniform_d_220_c20slash25: DefThickness = DefThickness(
         id=2,
         thickness_type=ThicknessType.uniform,
         material=AllMaterial.c20_slash_25_isotropic_linear_elastic,
-        uniform_thickness_d=0.220
+        uniform_thickness_d=0.220,
     )
     uniform_d_240_c20slash25: DefThickness = DefThickness(
         id=3,
         thickness_type=ThicknessType.uniform,
         material=AllMaterial.c20_slash_25_isotropic_linear_elastic,
-        uniform_thickness_d=0.240
+        uniform_thickness_d=0.240,
     )
